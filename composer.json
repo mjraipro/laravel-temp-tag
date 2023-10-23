@@ -1,5 +1,5 @@
 {
-    "name": "rajabloo/laravel-temp-tag",
+    "name": "mjraipro/laravel-temp-tag",
     "description": "Laravel Temporary Tag simplify tagging Eloquent models.",
     "type": "library",
     "version": "0.0.1",
