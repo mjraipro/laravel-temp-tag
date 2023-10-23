@@ -32,26 +32,9 @@ class TagService
         $this->model = $model;
     }
 
-    private function cache()
-    {
-        return app()->runningUnitTests() ? cache() : cache()->store('temp_tag');
-    }
-
     public function getActiveTag(string $tagTitle)
     {
-        $tag = $this->cache()->get($this->getCacheKey($tagTitle));
-
-        if ($tag) {
-            return $tag;
-        }
-
-        $tag = $this->getActiveTagFromDB($tagTitle);
-
-        if ($tag) {
-            $this->cache()->put($tag->getCacheKey(), $tag, $tag->expired_at);
-        }
-
-        return $tag;
+        return $this->getActiveTagFromDB($tagTitle);
     }
 
     public function getTag(string $tagTitle): ?TempTag
@@ -104,7 +87,6 @@ class TagService
             $data['title'] = $title;
             $newTags[] = $tagObj = TempTag::query()->updateOrCreate($data, $data + $exp + ['payload' => $payload]);
             $this->fireEvent($eventName, $tagObj);
-            $this->putInCache($expDate, $tagObj);
         }
 
         return $newTags;
@@ -186,25 +168,6 @@ class TagService
         self::queryForTitle($tagTitle, $q);
 
         return $q;
-    }
-
-    private function getCacheKey($title)
-    {
-        return 'temp_tag:'.$this->model->getTable().$this->model->getKey().','.$title;
-    }
-
-    private function putInCache($expDate, $tagObj)
-    {
-        $key = $tagObj->getCacheKey();
-        if (is_null($expDate)) {
-            return $this->cache()->forever($key, $tagObj);
-        }
-
-        if ($expDate->timestamp < now()->timestamp) {
-            $this->cache()->delete($key);
-        } else {
-            $this->cache()->put($key, $tagObj, $expDate);
-        }
     }
 
     public function getActiveTagFromDB($tagTitle)

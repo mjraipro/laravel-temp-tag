@@ -52,15 +52,8 @@ class TempTag extends Model
     {
         parent::boot();
 
-        self::deleted(function ($model) {
-            cache()->store('temp_tag')->delete($model->getCacheKey());
-        });
     }
 
-    public function getCacheKey()
-    {
-        return 'temp_tag:'.$this->taggable_type.$this->taggable_id.','.$this->title;
-    }
 
     public function isActive()
     {

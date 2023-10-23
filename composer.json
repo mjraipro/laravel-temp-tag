@@ -1,13 +1,13 @@
 {
-    "name": "imanghafoori/laravel-temp-tag",
+    "name": "rajabloo/laravel-temp-tag",
     "description": "Laravel Temporary Tag simplify tagging Eloquent models.",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Iman Ghafoori",
-            "email": "imanghafoori1@gmail.com",
-            "homepage": "https://github.com/imanghafoori1",
+            "name": "Mohammad Javad Rajabloo",
+            "email": "mjr.aipro@gmail.com",
+            "homepage": "https://github.com/mjraipro",
             "role": "Developer"
         }
     ],

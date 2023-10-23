@@ -13,7 +13,6 @@ class SampleTest extends TestCase
     /** @test */
     public function main()
     {
-        config()->set('cache.stores.temp_tag', ['driver' => 'array']);
         TempTag::query()->delete();
         $user = new User();
         $user->id = 1;
@@ -44,7 +43,6 @@ class SampleTest extends TestCase
         ];
         $this->assertTrue($res === [null, true, true, 'banned', false]);
 
-        cache()->store('temp_tag')->flush();
         $this->assertTrue(tempTags($user)->getTag('banned')->isActive());
 
         tempTags($user)->tagIt('banned_for', $tomorrow, ['count' => 1, 'ban_level' => 'hard']);
@@ -58,7 +56,7 @@ class SampleTest extends TestCase
         // =================== test expired tag =====================
 
         // travel through time
-        Carbon::setTestNow(Carbon::now()->addDay()->addMinute());
+
 
         $this->assertFalse(tempTags($user)->getExpiredTag('banned')->isActive());
         $this->assertFalse(tempTags($user)->getTag('banned')->isActive());

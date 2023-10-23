@@ -11,7 +11,6 @@ class TempTagServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        config()->set('cache.stores.temp_tag', ['driver' => 'file', 'path' => config('tag.cache_storage_path')]);
         $this->registerEloquentMacros();
         $this->registerConsoleCommands();
     }
@@ -34,9 +33,6 @@ class TempTagServiceProvider extends ServiceProvider
     protected function registerPublishes()
     {
         if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__.'/../config/temp_tag.php' => config_path('tag.php'),
-            ], 'tag-config');
 
             $this->publishes([
                 __DIR__.'/../database/migrations' => database_path('migrations'),
@@ -55,9 +51,7 @@ class TempTagServiceProvider extends ServiceProvider
 
     private function configure()
     {
-        if (! $this->app->configurationIsCached()) {
-            $this->mergeConfigFrom(__DIR__.'/../config/temp_tag.php', 'tag');
-        }
+
     }
 
     private function registerEloquentMacros()
