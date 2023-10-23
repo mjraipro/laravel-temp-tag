@@ -2,7 +2,7 @@
     "name": "rajabloo/laravel-temp-tag",
     "description": "Laravel Temporary Tag simplify tagging Eloquent models.",
     "type": "library",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "license": "MIT",
     "authors": [
         {
